@@ -1,0 +1,30 @@
+{
+  "name": "contracts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "merge": "node node_modules/sol-merger/bin/sol-merger.js './contracts/*.sol' ./merge"
+  },
+  "author": "Bablos Inc.",
+  "license": "ISC",
+  "dependencies": {
+    "eth-crypto": "^1.2.3",
+    "zeppelin-solidity": "^1.10.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-bignumber": "^2.0.2",
+    "dotenv": "^6.0.0",
+    "ganache-cli": "6.1.0",
+    "sol-merger": "^0.1.2",
+    "solidity-coverage": "^0.5.5",
+    "truffle": "4.1.8",
+    "truffle-hdwallet-provider": "0.0.5"
+  }
+}
