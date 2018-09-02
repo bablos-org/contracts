@@ -16,11 +16,11 @@ contract PriceUpdater is usingOraclize, Ownable, PriceUpdaterInterface {
   uint public priceLastUpdateRequest;
   uint public priceUpdateInterval;
   uint public callbackGas = 150000;
-  uint public maxInterval;
+  uint public requestInterval;
 
-  constructor (uint _priceUpdateInterval, uint _maxInterval) public {
+  constructor (uint _priceUpdateInterval, uint _requestInterval) public {
     priceUpdateInterval = _priceUpdateInterval;
-    maxInterval = _maxInterval;
+    requestInterval = _requestInterval;
     price[uint(PriceUpdaterInterface.Currency.WME)] = 1000;
   }
 
@@ -105,8 +105,8 @@ contract PriceUpdater is usingOraclize, Ownable, PriceUpdaterInterface {
     priceUpdateInterval = _priceUpdateInterval;
   }
 
-  function setMaxInterval(uint _maxInterval) external onlyOwner {
-    maxInterval = _maxInterval;
+  function setRequestInterval(uint _requestInterval) external onlyOwner {
+    requestInterval = _requestInterval;
   }
 
   /// @dev Check that double the update interval has passed since last successful price update
@@ -114,9 +114,9 @@ contract PriceUpdater is usingOraclize, Ownable, PriceUpdaterInterface {
     return (getTime() > priceLastUpdate + 2 * priceUpdateInterval);
   }
 
-  /// @dev Check that price update was requested more than max interval ago
+  /// @dev Check that price update was requested more than price update interval ago
   function updateRequestExpired() public view returns (bool) {
-    return getTime() >= (priceLastUpdateRequest + maxInterval);
+    return ((getTime() + requestInterval) >= (priceLastUpdateRequest + priceUpdateInterval));
   }
 
   /// @dev to be overridden in tests
